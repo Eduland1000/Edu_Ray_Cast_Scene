@@ -1,9 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
+using UnityEngine.SceneManagement;
 
-public class BoxRotation : MonoBehaviour
+public class RayCast : MonoBehaviour
 {
+    bool raycastUsed = false; 
+    
+    public Text countdownText; 
+
+    void Update()
+    {
         if(Input.GetButtonDown("Fire1") && raycastUsed == false) 
         {
             Ray ray =  Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -12,27 +20,25 @@ public class BoxRotation : MonoBehaviour
             
             if(Physics.Raycast(ray, out hit)) 
             {
-                if(hit.transform.tag == "1") 
+             if(hit.transform.tag == "1") 
                 {    
-                    StartCoroutine(Countdown("Scene 1")); 
-                    raycastUsed = true; 
+                    SceneManager.LoadScene("Scene 1");
                 }
-                else if(hit.transform.tag == "2") 
+             else if(hit.transform.tag == "2") 
                 {
-                    StartCoroutine(Countdown("Scene 2"));
-                    raycastUsed = true; 
+                    SceneManager.LoadScene("Scene 2");
                 }
-                else if(hit.transform.tag == "3") 
+            else if(hit.transform.tag == "3") 
                 {
-                    StartCoroutine(Countdown("Scene 3")); 
-                    raycastUsed = true; 
+                    SceneManager.LoadScene("Scene 3");
                 }
 
             }
         }
     }
-
-     IEnumerator Countdown(string scene) 
+    
+    
+ IEnumerator Countdown(string scene) 
     {
         while(countdownText.text != "GOO!") 
         {
@@ -51,7 +57,5 @@ public class BoxRotation : MonoBehaviour
             SceneManager.LoadScene(scene);
             raycastUsed = false;
         }
-
-
     }
 }
